@@ -9,18 +9,33 @@ describe('<Todo />', () => {
         const wrapper = shallow(<Todo />);
     });
 
-    test('should contain a title', () => {
-        const wrapper = shallow(<Todo />);
-        expect(wrapper.find('header').text()).toBe('Todo List')
+    describe('these elements should be displayed with minimum props', () => {
+        test('should contain a title', () => {
+            const wrapper = shallow(<Todo />);
+            expect(wrapper.find('header').text()).toBe('Todo List')
+        });
+    
+        test('should contain <InputBox /> to add todo items', () => {
+            const wrapper = shallow(<Todo />);
+            expect(wrapper.contains(<InputBox />)).toBe(true);
+        });
+    
+        test('should contain a list for the todo list', () => {
+            const wrapper = shallow(<Todo />);
+            expect(wrapper.contains(<TodoList />)).toBe(true);
+        });
     });
 
-    test('should contain <InputBox /> to add todo items', () => {
-        const wrapper = shallow(<Todo />);
-        expect(wrapper.contains(<InputBox />)).toBe(true);
-    });
+    describe('when a list is passed down as props to Todo', () => {
+        test('should forward prop to TodoList component', () => {
+            const listOfTodos = ['writing', 'reading'];
+            const wrapper = shallow(<Todo list={listOfTodos}/>);
+            const todoListComponent = wrapper.find(TodoList);
 
-    test('should contain a list for the todo list', () => {
-        const wrapper = shallow(<Todo />);
-        expect(wrapper.contains(<TodoList />)).toBe(true);
+            expect(todoListComponent.props().list).toEqual(listOfTodos);
+        });
+
+
+
     });
-})
+});
