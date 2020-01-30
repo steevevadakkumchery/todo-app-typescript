@@ -1,13 +1,13 @@
 import React from 'react';
+import InputBox from '../components/InputBox';
+import TodoList from '../components/TodoList';
 
-const Todo: React.FC = () => {
+const Todo = () => {
     return (
         <div>
-            <h1>Todo List</h1>
-            <input />
-            <ul>
-                <li></li>
-            </ul>
+            <header>Todo List</header>
+            <InputBox />
+            <TodoList />
         </div>
     );
 }
