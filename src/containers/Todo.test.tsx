@@ -1,5 +1,7 @@
 import React from 'react';
 import Todo from './Todo';
+import InputBox from '../components/InputBox';
+import TodoList from '../components/TodoList';
 import { shallow } from 'enzyme';
 
 describe('<Todo />', () => {
@@ -9,16 +11,16 @@ describe('<Todo />', () => {
 
     test('should contain a title', () => {
         const wrapper = shallow(<Todo />);
-        expect(wrapper.find('h1').text()).toBe('Todo List')
-    })
+        expect(wrapper.find('header').text()).toBe('Todo List')
+    });
 
-    test('should contain an input field to add todo items', () => {
+    test('should contain <InputBox /> to add todo items', () => {
         const wrapper = shallow(<Todo />);
-        expect(wrapper.contains(<input />)).toBe(true);
-    })
+        expect(wrapper.contains(<InputBox />)).toBe(true);
+    });
 
     test('should contain a list for the todo list', () => {
         const wrapper = shallow(<Todo />);
-        expect(wrapper.contains(<ul><li></li></ul>)).toBe(true);
-    })
+        expect(wrapper.contains(<TodoList />)).toBe(true);
+    });
 })
