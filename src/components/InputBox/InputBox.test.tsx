@@ -11,4 +11,4 @@ describe('<InputBox />', () => {
         const wrapper = shallow(<InputBox />);
         expect(wrapper.contains(<input />)).toBe(true);
     });
-})
+});
