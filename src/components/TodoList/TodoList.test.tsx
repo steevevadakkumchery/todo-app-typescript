@@ -14,7 +14,7 @@ describe('<TodoList />', () => {
         });
 
         test('should render message', () => {
-            const list = [];
+            const list: {id: number, text: string, completed: boolean}[] = [];
 
             const wrapper = shallow(<TodoList list={list} />);
 
