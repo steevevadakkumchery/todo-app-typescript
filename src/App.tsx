@@ -1,24 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Todo from './containers/Todo';
+import getCookie from './helpers/getCookie';
 
 const App: React.FC = () => {
+
+  let todoListCookieValue = getCookie('list');
+  let todoList: {id: number, text: string, completed: boolean}[] = [];
+  if(todoListCookieValue) {
+    todoList = JSON.parse(todoListCookieValue).todoList;
+  } else {
+    document.cookie = `list=${JSON.stringify({todoList: []})}`;
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Todo list={todoList} />
     </div>
   );
 }
