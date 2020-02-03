@@ -2,13 +2,19 @@ import React, { FunctionComponent } from 'react';
 
 type InputBoxProps = {
     handleOnChange: Function,
-    inputValue?: string
+    inputValue?: string,
+    handleSubmit: Function
 }
   
 
-const InputBox: FunctionComponent<InputBoxProps> = ({ handleOnChange, inputValue = '' }) => {
-    if(handleOnChange) {
-        return <input onChange={(e) => handleOnChange(e.target.value)} value={inputValue}/>;
+const InputBox: FunctionComponent<InputBoxProps> = ({ handleOnChange, inputValue = '', handleSubmit}) => {
+    if(handleOnChange && handleSubmit) {
+        return (
+            <div>
+                <input onChange={(e) => handleOnChange(e.target.value)} value={inputValue}/>
+                <button onClick={(e) => handleSubmit()}>Submit</button>
+            </div>
+        );
     } else {
         return null;
     }

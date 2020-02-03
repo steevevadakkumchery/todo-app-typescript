@@ -28,7 +28,7 @@ describe('<Todo />', () => {
 
     describe('when a list is passed down as props to Todo', () => {
         test('should forward prop to TodoList component', () => {
-            const listOfTodos = [ {id: 1, text: 'washing', completed: false},  {id: 1, text: 'reading', completed: false}];
+            const listOfTodos = [{id: 1, text: 'washing', completed: false},  {id: 2, text: 'reading', completed: false}];
             const wrapper = shallow(<Todo list={listOfTodos}/>);
             const todoListComponent = wrapper.find(TodoList);
 
@@ -45,5 +45,63 @@ describe('<Todo />', () => {
             inputField.simulate('change', { target: { value: inputValue} });
             expect(mountedWrapper.find(InputBox).props().inputValue).toEqual(inputValue);
         })
-    })
+    });
+
+    describe('handleSubmit function', () => {
+        test('handleSubmit is called when a value is entered in InputBox and submit is clicked', () => {
+            const listOfTodos = [{id: 1, text: 'washing', completed: false},  {id: 2, text: 'reading', completed: false}];
+
+            const mountedWrapper = mount(<Todo list={listOfTodos} />);
+            const inputField = mountedWrapper.find('input');
+            const submitButton = mountedWrapper.find('button');
+            const initialTodoListLength = mountedWrapper.find('ul li').length;
+
+            const inputValue = 'new value';
+
+            inputField.simulate('change', { target: { value: inputValue} });
+            submitButton.simulate('click');
+            const currentTodoListLength = mountedWrapper.find('ul li').length;
+
+            expect(currentTodoListLength).toEqual(initialTodoListLength + 1);
+        });
+
+        test('handleSubmit is called when a value is entered in InputBox and submit is clicked on an empty list', () => {
+            const listOfTodos: {
+                id: number;
+                text: string;
+                completed: boolean;
+            }[] | undefined = [];
+
+            const mountedWrapper = mount(<Todo list={listOfTodos} />);
+            const inputField = mountedWrapper.find('input');
+            const submitButton = mountedWrapper.find('button');
+            const initialTodoListLength = mountedWrapper.find('ul li').length;
+
+            const inputValue = 'new value';
+
+            inputField.simulate('change', { target: { value: inputValue} });
+            submitButton.simulate('click');
+            const currentTodoListLength = mountedWrapper.find('ul li').length;
+
+            expect(currentTodoListLength).toEqual(initialTodoListLength + 1);
+        });
+
+        test('should clear text value from input field on submit', () => {
+            const listOfTodos: {
+                id: number;
+                text: string;
+                completed: boolean;
+            }[] | undefined = [];
+
+            const mountedWrapper = mount(<Todo list={listOfTodos} />);
+            const inputField = mountedWrapper.find('input');
+            const submitButton = mountedWrapper.find('button');
+            const inputValue = 'new value';
+
+            inputField.simulate('change', { target: { value: inputValue} });
+            submitButton.simulate('click');
+            
+            expect(mountedWrapper.find(InputBox).props().inputValue).toEqual('');
+        });
+    });
 });
