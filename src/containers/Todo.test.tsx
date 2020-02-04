@@ -104,4 +104,34 @@ describe('<Todo />', () => {
             expect(mountedWrapper.find(InputBox).props().inputValue).toEqual('');
         });
     });
+
+    describe('handleToggle function', () => {
+        test('should show completed class when list item is clicked', () => {
+            let list = [
+                {id: 1, text: 'washing', completed: false},
+                {id: 2, text: 'cooking', completed: false},
+            ];
+    
+            const wrapper = mount(<Todo list={list} />);
+            const firstListItme = wrapper.find('ul li').first();
+            firstListItme.simulate('click');
+    
+            expect(wrapper.find('ul li').first().hasClass('completed')).toBe(true);
+        });
+
+        test('should show empty class when list item is clicked', () => {
+            let list = [
+                {id: 1, text: 'washing', completed: true},
+                {id: 2, text: 'cooking', completed: true},
+            ];
+    
+            const wrapper = mount(<Todo list={list} />);
+            const firstListItme = wrapper.find('ul li').first();
+            firstListItme.simulate('click');
+    
+            expect(wrapper.find('ul li').first().hasClass('completed')).toBe(false);
+        });
+    });
+
+  
 });

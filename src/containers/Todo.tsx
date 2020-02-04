@@ -25,12 +25,27 @@ const Todo = (props: { list?: {id: number, text: string, completed: boolean}[] }
             }
         })
     }
+
+    const handleItemToggle = (id: number) => {
+        setListOfItems(prev => {
+            const toggledItemIndex = prev?.findIndex((item) => item.id === id);
+            if(toggledItemIndex !== undefined && toggledItemIndex > -1) {
+                let itemToUpdate = prev && prev.slice(toggledItemIndex, toggledItemIndex + 1);
+                let updatedItem = JSON.parse(JSON.stringify(itemToUpdate));;
+                if(updatedItem){
+                    updatedItem[0].completed = !updatedItem[0].completed;
+                    return prev?.slice(0, toggledItemIndex).concat(updatedItem).concat(prev?.slice(toggledItemIndex + 1));
+                }
+            }
+            return prev;
+        });
+    }
     
     return (
         <div>
             <header>Todo List</header>
             <InputBox handleOnChange={handleOnChange} inputValue={inputValue} handleSubmit={handleSubmit}/>
-            <TodoList list={listOfItems}/>
+            <TodoList list={listOfItems} handleToggle={handleItemToggle}/>
         </div>
     );
 }
